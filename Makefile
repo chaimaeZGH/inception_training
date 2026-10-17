@@ -7,7 +7,7 @@ DC_FILE = ./srcs/docker-compose.yml
 all: up
 
 up:
-	@mkdir -p /home/${USER}/data/mariadb /home/${USER}/data/wordpress /home/${USER}/data/redis
+	@mkdir -p /home/${USER}/Desktop/inception_training/data/mariadb /home/${USER}/Desktop/inception_training/data/wordpress 
 	@$(DOCKER_COMPOSE) -f $(DC_FILE) up -d --build
 
 down:
@@ -30,7 +30,7 @@ clean:
 
 fclean: clean
 	@docker system prune -a -f --volumes
-	@docker run --rm -v /home/${USER}/data:/data alpine sh -c 'rm -rf /data/mariadb /data/wordpress /data/redis'
+	@docker run --rm -v /home/${USER}//Desktop/inception_training/data:/data alpine sh -c 'rm -rf /data/mariadb /data/wordpress '
 
 re: fclean all
 
