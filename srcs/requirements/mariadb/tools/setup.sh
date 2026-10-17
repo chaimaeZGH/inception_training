@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+MYSQL_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
+MYSQL_PASSWORD=$(cat /run/secrets/db_password)
+
 if [ -z "$MYSQL_ROOT_PASSWORD" ] || [ -z "$MYSQL_DATABASE" ] || \
 [ -z "$MYSQL_USER" ] || [ -z "$MYSQL_PASSWORD" ]; then
     echo "Error: Missing required environment variables"

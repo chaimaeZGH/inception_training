@@ -1,5 +1,7 @@
 #!/bin/sh
 set -e
+WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
+MYSQL_PASSWORD=$(cat /run/secrets/db_password)
 
 if [ -z "$MYSQL_DATABASE" ] || [ -z "$MYSQL_USER" ] || \
    [ -z "$MYSQL_PASSWORD" ]; then
