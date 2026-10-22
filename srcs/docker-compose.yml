@@ -11,7 +11,7 @@ services:
     depends_on:
       wordpress:
         condition: service_healthy
-    restart: always
+    restart: on-failure
 
   wordpress:
     build: ./requirements/wordpress
@@ -41,7 +41,7 @@ services:
       timeout: 3s
       retries: 30
       start_period: 20s
-    restart: always
+    restart: on-failure
 
   mariadb:
     build: ./requirements/mariadb
@@ -56,7 +56,7 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - inception
-    restart: always
+    restart: on-failure
 
 secrets:
   db_root_password:
@@ -74,14 +74,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/${USER}/Desktop/inception_training/data/wordpress
+      device: /home/${USER}/data/wordpress
 
   mariadb_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/${USER}/Desktop/inception_training/data/mariadb
+      device: /home/${USER}/data/mariadb
 
 networks:
   inception:
