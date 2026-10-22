@@ -11,7 +11,7 @@ services:
     depends_on:
       wordpress:
         condition: service_healthy
-    restart: unless-stopped
+    restart: always
 
   wordpress:
     build: ./requirements/wordpress
@@ -41,7 +41,7 @@ services:
       timeout: 3s
       retries: 30
       start_period: 20s
-    restart: unless-stopped
+    restart: always
 
   mariadb:
     build: ./requirements/mariadb
@@ -56,7 +56,7 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - inception
-    restart: unless-stopped
+    restart: always
 
 secrets:
   db_root_password:
