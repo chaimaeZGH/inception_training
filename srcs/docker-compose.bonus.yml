@@ -1,0 +1,55 @@
+include:
+  - ./docker-compose.yml
+
+services:
+  webpage:
+    build: ./requirements/bonus/webpage
+    image: webpage:inception        
+    container_name: webpage
+    ports:
+      - "3000:3000"
+    networks:
+      - inception
+    restart: on-failure
+
+  redis:
+    build: ./requirements/bonus/redis
+    image: redis:inception
+    container_name: redis
+    networks:
+      - inception
+    restart: on-failure
+
+  adminer:
+    build: ./requirements/bonus/adminer        # folder containing this Dockerfile
+    image: adminer:inception
+    container_name: adminer
+    depends_on:
+      - mariadb                   # must match your mariadb service name
+    ports:
+      - "9000:9000"
+    networks:
+      - inception
+    restart: on-failure
+
+  ftp:
+    build: ./requirements/bonus/ftp
+    environment:
+      - FTP_USER=${FTP_USER}
+    secrets:
+      - ftp_password
+    image: ftp:inception
+    container_name: ftp
+    env_file: .env
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    volumes:
+      - wordpress_data:/var/www/html     # use the SAME volume name WordPress uses
+    networks:
+      - inception
+    restart: on-failure
+
+secrets:
+  ftp_password:
+    file: ../secrets/ftp_password.txt
