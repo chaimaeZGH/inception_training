@@ -36,7 +36,7 @@ clean:
 
 
 bonus:
-	@mkdir -p $(DATA_DIR)/mariadb $(DATA_DIR)/wordpress
+	@mkdir -p $(DATA_DIR)/mariadb $(DATA_DIR)/wordpress $(DATA_DIR)/portainer
 	@$(DOCKER_COMPOSE) -f $(DC_BONUS) up -d --build
 
 bonus-down:
@@ -53,7 +53,7 @@ bonus-clean:
 
 fclean:  bonus-clean clean
 	@docker system prune -a -f --volumes
-	@docker run --rm -v $(DATA_DIR):/data alpine sh -c 'rm -rf /data/mariadb /data/wordpress'
+	@docker run --rm -v $(DATA_DIR):/data alpine sh -c 'rm -rf /data/mariadb /data/wordpress /data/portainer'
 
 re: fclean all
 
